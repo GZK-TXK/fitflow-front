@@ -95,3 +95,15 @@
     gap: $space-xs;
   }
 }
+
+@media (max-width: $bp-md) {
+  .admin__table th,
+  .admin__table td {
+    padding: $space-xs $space-sm;
+    white-space: nowrap;
+  }
+
+  .admin__row-actions {
+    flex-direction: column;
+  }
+}

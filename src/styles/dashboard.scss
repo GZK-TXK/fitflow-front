@@ -61,3 +61,9 @@
     font-size: 0.85rem;
   }
 }
+
+@media (max-width: $bp-sm) {
+  .dashboard__stats {
+    grid-template-columns: 1fr;
+  }
+}

@@ -123,3 +123,9 @@
     color: $color-text-muted;
   }
 }
+
+@media (max-width: $bp-md) {
+  .auth__card {
+    padding: $space-lg;
+  }
+}

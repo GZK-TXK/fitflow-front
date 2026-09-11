@@ -146,3 +146,30 @@
     gap: $space-xs;
   }
 }
+
+@media (max-width: $bp-md) {
+  .workouts__item,
+  .workout-builder__item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .workouts__actions,
+  .workout-builder__item-actions {
+    width: 100%;
+  }
+
+  .workouts__actions .ui-button,
+  .workout-builder__item-actions .ui-button {
+    flex: 1;
+  }
+
+  .workout-item-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .workout-builder__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
