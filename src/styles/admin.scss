@@ -1,0 +1,97 @@
+@use 'variables' as *;
+
+.admin {
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: $space-md;
+    margin: $space-lg 0;
+  }
+
+  &__stat {
+    background: $color-surface;
+    border-radius: $radius-md;
+    padding: $space-lg;
+    box-shadow: $shadow-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+  }
+
+  &__stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $color-primary;
+  }
+
+  &__stat-label {
+    color: $color-text-muted;
+  }
+
+  &__links {
+    display: flex;
+    gap: $space-md;
+    flex-wrap: wrap;
+    margin-top: $space-lg;
+  }
+
+  &__link {
+    background: $color-surface;
+    border-radius: $radius-md;
+    padding: $space-md $space-lg;
+    color: $color-text;
+    box-shadow: $shadow-sm;
+
+    &:hover { color: $color-primary; }
+  }
+
+  &__placeholder {
+    color: $color-text-muted;
+    padding: $space-lg 0;
+  }
+
+  &__table-wrap {
+    overflow-x: auto;
+    background: $color-surface;
+    border-radius: $radius-md;
+    box-shadow: $shadow-sm;
+    margin-top: $space-md;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      text-align: left;
+      padding: $space-sm $space-md;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    th {
+      color: $color-text-muted;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+  }
+
+  &__badge {
+    font-size: 0.75rem;
+    padding: 2px $space-sm;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: $color-text-muted;
+
+    &--admin {
+      background: rgba(255, 107, 53, 0.15);
+      color: $color-primary;
+    }
+  }
+
+  &__row-actions {
+    display: flex;
+    gap: $space-xs;
+  }
+}

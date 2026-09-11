@@ -38,6 +38,15 @@
     gap: $space-xs;
   }
 
+  &__section {
+    margin-top: $space-md;
+    padding: 0 $space-md;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $color-text-muted;
+  }
+
   &__link {
     padding: $space-sm $space-md;
     border-radius: $radius-sm;
