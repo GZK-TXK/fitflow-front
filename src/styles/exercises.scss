@@ -1,0 +1,100 @@
+@use 'variables' as *;
+
+.exercises {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-lg;
+    gap: $space-md;
+    flex-wrap: wrap;
+  }
+
+  &__filters {
+    display: flex;
+    gap: $space-xs;
+    flex-wrap: wrap;
+    margin-bottom: $space-lg;
+  }
+
+  &__filter {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: $color-text-muted;
+    border-radius: 999px;
+    padding: $space-xs $space-md;
+    font-size: 0.85rem;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+
+    &--active {
+      background: rgba(255, 107, 53, 0.12);
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+  }
+
+  &__empty {
+    color: $color-text-muted;
+    padding: $space-lg 0;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: $space-md;
+  }
+
+  &__card {
+    background: $color-surface;
+    border-radius: $radius-md;
+    box-shadow: $shadow-sm;
+    padding: $space-md;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &__name {
+    font-size: 1rem;
+    color: $color-text;
+  }
+
+  &__category {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    color: $color-primary;
+    background: rgba(255, 107, 53, 0.12);
+    border-radius: 999px;
+    padding: 2px $space-sm;
+  }
+
+  &__video {
+    font-size: 0.85rem;
+    color: $color-text-muted;
+
+    &:hover { color: $color-primary; }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-xs;
+    margin-top: auto;
+  }
+}
+
+.exercise-form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-sm;
+    margin-top: $space-sm;
+  }
+}
