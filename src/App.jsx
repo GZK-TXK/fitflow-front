@@ -9,6 +9,7 @@ import ClientsPage from './pages/ClientsPage.jsx'
 import ClientDetailPage from './pages/ClientDetailPage.jsx'
 import ExercisesPage from './pages/ExercisesPage.jsx'
 import WorkoutsPage from './pages/WorkoutsPage.jsx'
+import WorkoutBuilderPage from './pages/WorkoutBuilderPage.jsx'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
               <Route path="/clients/:id" element={<ClientDetailPage />} />
               <Route path="/exercises" element={<ExercisesPage />} />
               <Route path="/workouts" element={<WorkoutsPage />} />
+              <Route path="/workouts/:id" element={<WorkoutBuilderPage />} />
             </Route>
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,0 +1,148 @@
+@use 'variables' as *;
+
+.workouts {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-lg;
+    gap: $space-md;
+    flex-wrap: wrap;
+  }
+
+  &__empty {
+    color: $color-text-muted;
+    padding: $space-lg 0;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-md;
+    background: $color-surface;
+    border-radius: $radius-md;
+    padding: $space-md $space-lg;
+    box-shadow: $shadow-sm;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    font-weight: 600;
+    color: $color-text;
+
+    &:hover { color: $color-primary; }
+  }
+
+  &__meta {
+    font-size: 0.85rem;
+    color: $color-text-muted;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-xs;
+  }
+}
+
+.workout-form,
+.workout-item-form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-sm;
+    margin-top: $space-sm;
+  }
+
+  textarea.ui-input {
+    resize: vertical;
+  }
+}
+
+.workout-item-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-md;
+}
+
+.workout-builder {
+  &__back {
+    display: inline-block;
+    margin-bottom: $space-md;
+    color: $color-text-muted;
+
+    &:hover { color: $color-primary; }
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-md;
+    flex-wrap: wrap;
+    margin-bottom: $space-lg;
+  }
+
+  &__meta {
+    color: $color-text-muted;
+    font-size: 0.9rem;
+  }
+
+  &__description {
+    color: $color-text;
+    margin-top: $space-sm;
+  }
+
+  &__items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-md;
+    background: $color-surface;
+    border-radius: $radius-md;
+    padding: $space-md $space-lg;
+    box-shadow: $shadow-sm;
+  }
+
+  &__item-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item-name {
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__item-meta {
+    font-size: 0.85rem;
+    color: $color-text-muted;
+  }
+
+  &__item-actions {
+    display: flex;
+    gap: $space-xs;
+  }
+}
