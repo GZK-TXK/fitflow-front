@@ -1,0 +1,8 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'base';
+
+.app {
+  min-height: 100%;
+  padding: $space-lg;
+}
