@@ -1,0 +1,88 @@
+@use 'variables' as *;
+
+.auth {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-lg;
+
+  &__card {
+    width: 100%;
+    max-width: 420px;
+    background: $color-surface;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-md;
+    padding: $space-xl;
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+  }
+
+  &__title {
+    font-size: 2rem;
+    color: $color-primary;
+    text-align: center;
+  }
+
+  &__subtitle {
+    color: $color-text-muted;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  &__error {
+    background: rgba(229, 72, 77, 0.12);
+    color: $color-danger;
+    border: 1px solid $color-danger;
+    border-radius: $radius-sm;
+    padding: $space-sm $space-md;
+    font-size: 0.875rem;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    font-size: 0.875rem;
+    color: $color-text-muted;
+
+    input {
+      background: $color-bg;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: $radius-sm;
+      padding: $space-sm $space-md;
+      color: $color-text;
+      outline: none;
+
+      &:focus {
+        border-color: $color-primary;
+      }
+    }
+  }
+
+  &__submit {
+    margin-top: $space-sm;
+    background: $color-primary;
+    color: #fff;
+    border: none;
+    border-radius: $radius-sm;
+    padding: $space-md;
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+      background: $color-primary-dark;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__switch {
+    text-align: center;
+    font-size: 0.875rem;
+    color: $color-text-muted;
+  }
+}
