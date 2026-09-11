@@ -1,6 +1,8 @@
 import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
+import { signInWithPopup } from 'firebase/auth'
 import { api } from '../lib/apiClient.js'
 import { setToken, clearToken, setUnauthorizedHandler } from '../lib/tokenStore.js'
+import { auth, googleProvider } from '../config/firebase.js'
 
 export const AuthContext = createContext(null)
 
@@ -42,9 +44,24 @@ export function AuthProvider({ children }) {
     [applySession]
   )
 
+  const loginWithGoogle = useCallback(async () => {
+    const result = await signInWithPopup(auth, googleProvider)
+    const idToken = await result.user.getIdToken()
+    const data = await api.post('/api/auth/google', { idToken }, { auth: false })
+    return applySession(data)
+  }, [applySession])
+
   const value = useMemo(
-    () => ({ user, token, isAuthenticated: Boolean(token), login, register, logout }),
-    [user, token, login, register, logout]
+    () => ({
+      user,
+      token,
+      isAuthenticated: Boolean(token),
+      login,
+      register,
+      loginWithGoogle,
+      logout,
+    }),
+    [user, token, login, register, loginWithGoogle, logout]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth.js'
 import '../styles/auth.scss'
 
 export default function RegisterPage() {
-  const { register } = useAuth()
+  const { register, loginWithGoogle } = useAuth()
   const navigate = useNavigate()
 
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
@@ -40,6 +40,19 @@ export default function RegisterPage() {
       navigate('/', { replace: true })
     } catch (err) {
       setError(err.message || 'No se pudo registrar la cuenta')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleGoogle = async () => {
+    setError('')
+    setLoading(true)
+    try {
+      await loginWithGoogle()
+      navigate('/', { replace: true })
+    } catch (err) {
+      setError(err.message || 'No se pudo continuar con Google')
     } finally {
       setLoading(false)
     }
@@ -96,6 +109,12 @@ export default function RegisterPage() {
 
         <button className="auth__submit" type="submit" disabled={loading}>
           {loading ? 'Creando...' : 'Crear cuenta'}
+        </button>
+
+        <p className="auth__divider">o</p>
+
+        <button className="auth__google" type="button" onClick={handleGoogle} disabled={loading}>
+          Continuar con Google
         </button>
 
         <p className="auth__switch">

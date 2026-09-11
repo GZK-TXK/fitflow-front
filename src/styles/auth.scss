@@ -80,6 +80,43 @@
     }
   }
 
+  &__divider {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
+    color: $color-text-muted;
+    font-size: 0.8rem;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &__google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #1f1f1f;
+    border: none;
+    border-radius: $radius-sm;
+    padding: $space-md;
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+      background: #f1f1f1;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
   &__switch {
     text-align: center;
     font-size: 0.875rem;

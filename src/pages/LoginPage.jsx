@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth.js'
 import '../styles/auth.scss'
 
 export default function LoginPage() {
-  const { login } = useAuth()
+  const { login, loginWithGoogle } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from?.pathname || '/'
@@ -26,6 +26,19 @@ export default function LoginPage() {
       navigate(from, { replace: true })
     } catch (err) {
       setError(err.message || 'No se pudo iniciar sesión')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleGoogle = async () => {
+    setError('')
+    setLoading(true)
+    try {
+      await loginWithGoogle()
+      navigate(from, { replace: true })
+    } catch (err) {
+      setError(err.message || 'No se pudo iniciar sesión con Google')
     } finally {
       setLoading(false)
     }
@@ -65,6 +78,12 @@ export default function LoginPage() {
 
         <button className="auth__submit" type="submit" disabled={loading}>
           {loading ? 'Entrando...' : 'Entrar'}
+        </button>
+
+        <p className="auth__divider">o</p>
+
+        <button className="auth__google" type="button" onClick={handleGoogle} disabled={loading}>
+          Continuar con Google
         </button>
 
         <p className="auth__switch">

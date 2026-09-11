@@ -1,0 +1,63 @@
+@use 'variables' as *;
+
+.dashboard {
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: $space-md;
+    margin: $space-lg 0;
+  }
+
+  &__stat {
+    background: $color-surface;
+    border-radius: $radius-md;
+    padding: $space-lg;
+    box-shadow: $shadow-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $space-xs;
+    border: 1px solid transparent;
+
+    &:hover { border-color: $color-primary; }
+  }
+
+  &__stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: $color-primary;
+  }
+
+  &__stat-label {
+    color: $color-text-muted;
+  }
+
+  &__subtitle {
+    margin-bottom: $space-md;
+    font-size: 1.15rem;
+  }
+
+  &__empty {
+    color: $color-text-muted;
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &__list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $color-surface;
+    border-radius: $radius-md;
+    padding: $space-sm $space-md;
+  }
+
+  &__list-meta {
+    color: $color-text-muted;
+    font-size: 0.85rem;
+  }
+}
