@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import ClientsPage from './pages/ClientsPage.jsx'
+import ClientDetailPage from './pages/ClientDetailPage.jsx'
 import ExercisesPage from './pages/ExercisesPage.jsx'
 import WorkoutsPage from './pages/WorkoutsPage.jsx'
 
@@ -20,6 +21,7 @@ export default function App() {
             <Route element={<AppLayout />}>
               <Route path="/" element={<DashboardPage />} />
               <Route path="/clients" element={<ClientsPage />} />
+              <Route path="/clients/:id" element={<ClientDetailPage />} />
               <Route path="/exercises" element={<ExercisesPage />} />
               <Route path="/workouts" element={<WorkoutsPage />} />
             </Route>
