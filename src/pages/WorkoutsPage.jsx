@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ClipboardList } from 'lucide-react'
 import { useWorkouts } from '../hooks/useWorkouts.js'
 import { useClients } from '../hooks/useClients.js'
 import Button from '../components/ui/Button.jsx'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
+import PageHeader from '../components/ui/PageHeader.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
 import ConfirmDialog from '../components/ui/ConfirmDialog.jsx'
 import WorkoutFormModal from '../components/workouts/WorkoutFormModal.jsx'
 import '../styles/workouts.scss'
@@ -52,17 +55,22 @@ export default function WorkoutsPage() {
 
   return (
     <section className="workouts">
-      <header className="workouts__header">
-        <h1>Rutinas</h1>
-        <Button onClick={openCreate}>Nueva rutina</Button>
-      </header>
+      <PageHeader
+        title="Rutinas"
+        actions={<Button onClick={openCreate}>Nueva rutina</Button>}
+      />
 
       <Alert variant="error">{error || actionError}</Alert>
 
       {loading ? (
         <Spinner label="Cargando rutinas..." />
       ) : workouts.length === 0 ? (
-        <p className="workouts__empty">Todavía no tienes rutinas. Crea la primera.</p>
+        <EmptyState
+          icon={<ClipboardList size={32} />}
+          title="Sin rutinas"
+          message="Todavía no tienes rutinas. Crea la primera."
+          action={<Button onClick={openCreate}>Nueva rutina</Button>}
+        />
       ) : (
         <ul className="workouts__list">
           {workouts.map((workout) => (

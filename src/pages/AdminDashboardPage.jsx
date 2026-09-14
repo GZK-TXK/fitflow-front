@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAdminStats } from '../hooks/useAdmin.js'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
+import PageHeader from '../components/ui/PageHeader.jsx'
 import '../styles/admin.scss'
 
 export default function AdminDashboardPage() {
@@ -9,7 +10,7 @@ export default function AdminDashboardPage() {
 
   return (
     <section className="admin">
-      <h1>Panel de administración</h1>
+      <PageHeader title="Panel de administración" subtitle="Resumen de la plataforma" />
 
       <Alert variant="error">{error}</Alert>
 
@@ -33,12 +34,16 @@ export default function AdminDashboardPage() {
             <span className="admin__stat-value">{stats.workouts}</span>
             <span className="admin__stat-label">Rutinas</span>
           </div>
+          <div className="admin__stat admin__stat--warning">
+            <span className="admin__stat-value">{stats.pending}</span>
+            <span className="admin__stat-label">Pendientes</span>
+          </div>
         </div>
       ) : null}
 
       <div className="admin__links">
-        <Link to="/admin/trainers" className="admin__link">
-          Gestionar entrenadores
+        <Link to="/admin/users" className="admin__link">
+          Gestionar usuarios
         </Link>
         <Link to="/admin/subscriptions" className="admin__link">
           Suscripciones

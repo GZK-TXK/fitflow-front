@@ -80,6 +80,11 @@
     }
   }
 
+  &__submit--link {
+    display: block;
+    text-align: center;
+  }
+
   &__divider {
     display: flex;
     align-items: center;

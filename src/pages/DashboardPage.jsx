@@ -1,10 +1,11 @@
-
 import { Link } from 'react-router-dom'
 import { useClients } from '../hooks/useClients.js'
 import { useExercises } from '../hooks/useExercises.js'
 import { useWorkouts } from '../hooks/useWorkouts.js'
+import PageHeader from '../components/ui/PageHeader.jsx'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
 import '../styles/dashboard.scss'
 
 export default function DashboardPage() {
@@ -17,7 +18,7 @@ export default function DashboardPage() {
 
   return (
     <section className="dashboard">
-      <h1>Dashboard</h1>
+      <PageHeader title="Dashboard" />
 
       <Alert variant="error">{error}</Alert>
 
@@ -43,7 +44,7 @@ export default function DashboardPage() {
           <div className="dashboard__recent">
             <h2 className="dashboard__subtitle">Últimos clientes</h2>
             {clients.length === 0 ? (
-              <p className="dashboard__empty">Aún no tienes clientes.</p>
+              <EmptyState message="Aún no tienes clientes." />
             ) : (
               <ul className="dashboard__list">
                 {clients.slice(0, 5).map((client) => (

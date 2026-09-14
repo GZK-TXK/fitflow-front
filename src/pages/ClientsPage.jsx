@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Users } from 'lucide-react'
 import { useClients } from '../hooks/useClients.js'
 import Button from '../components/ui/Button.jsx'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
+import PageHeader from '../components/ui/PageHeader.jsx'
 import ConfirmDialog from '../components/ui/ConfirmDialog.jsx'
 import ClientFormModal from '../components/clients/ClientFormModal.jsx'
 import '../styles/clients.scss'
@@ -50,17 +53,22 @@ export default function ClientsPage() {
 
   return (
     <section className="clients">
-      <header className="clients__header">
-        <h1>Clientes</h1>
-        <Button onClick={openCreate}>Nuevo cliente</Button>
-      </header>
+      <PageHeader
+        title="Clientes"
+        actions={<Button onClick={openCreate}>Nuevo cliente</Button>}
+      />
 
       <Alert variant="error">{error || actionError}</Alert>
 
       {loading ? (
         <Spinner label="Cargando clientes..." />
       ) : clients.length === 0 ? (
-        <p className="clients__empty">Todavía no tienes clientes. Crea el primero.</p>
+        <EmptyState
+          icon={<Users size={32} />}
+          title="Sin clientes"
+          message="Todavía no tienes clientes. Crea el primero."
+          action={<Button onClick={openCreate}>Nuevo cliente</Button>}
+        />
       ) : (
         <ul className="clients__list">
           {clients.map((client) => (

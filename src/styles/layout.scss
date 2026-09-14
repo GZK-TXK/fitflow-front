@@ -24,7 +24,7 @@
 .sidebar {
   width: 240px;
   background: $color-surface;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid $color-border;
   padding: $space-lg $space-md;
   display: flex;
   flex-direction: column;
@@ -38,8 +38,11 @@
 
   &__brand {
     font-size: 1.5rem;
-    font-weight: 700;
-    color: $color-primary;
+    font-weight: 800;
+    background: $gradient-brand;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   &__close {
@@ -66,12 +69,24 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: $color-text-muted;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
   }
 
   &__link {
+    display: flex;
+    align-items: center;
+    gap: $space-sm;
     padding: $space-sm $space-md;
     border-radius: $radius-sm;
     color: $color-text-muted;
+    transition: background 0.15s ease, color 0.15s ease;
 
     &:hover {
       background: rgba(255, 255, 255, 0.04);
@@ -88,7 +103,7 @@
 .navbar {
   height: 64px;
   background: $color-surface;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid $color-border;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -130,7 +145,7 @@
 
   &__logout {
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid $color-border;
     color: $color-text;
     border-radius: $radius-sm;
     padding: $space-xs $space-md;

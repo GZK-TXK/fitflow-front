@@ -28,38 +28,45 @@ export function useAdminStats() {
   return { stats, loading, error }
 }
 
-export function useTrainers() {
-  const [trainers, setTrainers] = useState([])
+export function useUsers(role = '') {
+  const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  const loadTrainers = useCallback(async () => {
+  const loadUsers = useCallback(async () => {
     setLoading(true)
     setError('')
     try {
-      const data = await api.get('/api/admin/trainers')
-      setTrainers(data)
+      const query = role ? `?role=${role}` : ''
+      const data = await api.get(`/api/admin/users${query}`)
+      setUsers(data)
     } catch (err) {
-      setError(err.message || 'No se pudieron cargar los entrenadores')
+      setError(err.message || 'No se pudieron cargar los usuarios')
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [role])
 
   useEffect(() => {
-    loadTrainers()
-  }, [loadTrainers])
+    loadUsers()
+  }, [loadUsers])
 
-  const updateRole = useCallback(async (id, role) => {
-    const updated = await api.put(`/api/admin/trainers/${id}/role`, { role })
-    setTrainers((prev) => prev.map((t) => (t.id === id ? { ...t, role: updated.role } : t)))
+  const updateStatus = useCallback(async (id, status) => {
+    const updated = await api.put(`/api/admin/users/${id}/status`, { status })
+    setUsers((prev) => prev.map((u) => (u.id === id ? { ...u, status: updated.status } : u)))
     return updated
   }, [])
 
-  const deleteTrainer = useCallback(async (id) => {
-    await api.delete(`/api/admin/trainers/${id}`)
-    setTrainers((prev) => prev.filter((t) => t.id !== id))
+  const updateRole = useCallback(async (id, roleValue) => {
+    const updated = await api.put(`/api/admin/trainers/${id}/role`, { role: roleValue })
+    setUsers((prev) => prev.map((u) => (u.id === id ? { ...u, role: updated.role } : u)))
+    return updated
   }, [])
 
-  return { trainers, loading, error, loadTrainers, updateRole, deleteTrainer }
+  const deleteUser = useCallback(async (id) => {
+    await api.delete(`/api/admin/trainers/${id}`)
+    setUsers((prev) => prev.filter((u) => u.id !== id))
+  }, [])
+
+  return { users, loading, error, loadUsers, updateStatus, updateRole, deleteUser }
 }

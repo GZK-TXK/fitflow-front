@@ -10,6 +10,7 @@
 
   &__stat {
     background: $color-surface;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
     padding: $space-lg;
     box-shadow: $shadow-sm;
@@ -19,9 +20,13 @@
   }
 
   &__stat-value {
-    font-size: 2rem;
+    font-size: $font-2xl;
     font-weight: 700;
     color: $color-primary;
+  }
+
+  &__stat--warning {
+    .admin__stat-value { color: $color-warning; }
   }
 
   &__stat-label {
@@ -37,25 +42,52 @@
 
   &__link {
     background: $color-surface;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
     padding: $space-md $space-lg;
     color: $color-text;
     box-shadow: $shadow-sm;
+    transition: border-color 0.15s ease, color 0.15s ease;
 
-    &:hover { color: $color-primary; }
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
   }
 
-  &__placeholder {
+  &__filters {
+    display: flex;
+    gap: $space-xs;
+    flex-wrap: wrap;
+    margin-bottom: $space-lg;
+  }
+
+  &__filter {
+    background: transparent;
+    border: 1px solid $color-border;
     color: $color-text-muted;
-    padding: $space-lg 0;
+    border-radius: 999px;
+    padding: $space-xs $space-md;
+    font-size: $font-sm;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+
+    &--active {
+      background: rgba(255, 107, 53, 0.12);
+      border-color: $color-primary;
+      color: $color-primary;
+    }
   }
 
   &__table-wrap {
     overflow-x: auto;
     background: $color-surface;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
     box-shadow: $shadow-sm;
-    margin-top: $space-md;
   }
 
   &__table {
@@ -66,27 +98,42 @@
     td {
       text-align: left;
       padding: $space-sm $space-md;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid $color-border;
     }
 
     th {
       color: $color-text-muted;
-      font-size: 0.8rem;
+      font-size: $font-xs;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
   }
 
   &__badge {
-    font-size: 0.75rem;
+    font-size: $font-xs;
     padding: 2px $space-sm;
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.08);
     color: $color-text-muted;
 
     &--admin {
-      background: rgba(255, 107, 53, 0.15);
-      color: $color-primary;
+      background: rgba(43, 125, 233, 0.15);
+      color: #8bb8f2;
+    }
+
+    &--active {
+      background: rgba(46, 196, 182, 0.15);
+      color: $color-success;
+    }
+
+    &--pending {
+      background: rgba(245, 165, 36, 0.15);
+      color: $color-warning;
+    }
+
+    &--disabled {
+      background: rgba(229, 72, 77, 0.15);
+      color: $color-danger;
     }
   }
 

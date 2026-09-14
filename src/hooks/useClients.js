@@ -48,27 +48,22 @@ export function useClient(id) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    let active = true
+  const loadClient = useCallback(async () => {
     setLoading(true)
     setError('')
-
-    api
-      .get(`/api/clients/${id}`)
-      .then((data) => {
-        if (active) setClient(data)
-      })
-      .catch((err) => {
-        if (active) setError(err.message || 'No se pudo cargar el cliente')
-      })
-      .finally(() => {
-        if (active) setLoading(false)
-      })
-
-    return () => {
-      active = false
+    try {
+      const data = await api.get(`/api/clients/${id}`)
+      setClient(data)
+    } catch (err) {
+      setError(err.message || 'No se pudo cargar el cliente')
+    } finally {
+      setLoading(false)
     }
   }, [id])
 
-  return { client, loading, error }
+  useEffect(() => {
+    loadClient()
+  }, [loadClient])
+
+  return { client, loading, error, reloadClient: loadClient }
 }

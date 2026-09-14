@@ -1,5 +1,6 @@
 @use 'variables' as *;
 
+// ===== Botones =====
 .ui-button {
   display: inline-flex;
   align-items: center;
@@ -8,6 +9,7 @@
   border: 1px solid transparent;
   border-radius: $radius-sm;
   font-weight: 600;
+  line-height: 1;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 
   &:disabled {
@@ -15,14 +17,26 @@
     cursor: not-allowed;
   }
 
-  &--sm { padding: $space-xs $space-sm; font-size: 0.8rem; }
-  &--md { padding: $space-sm $space-md; font-size: 0.9rem; }
-  &--lg { padding: $space-md $space-lg; font-size: 1rem; }
+  &--sm { padding: $space-sm $space-md; font-size: $font-xs; }
+  &--md { padding: $space-sm $space-lg; font-size: $font-sm; }
+  &--lg { padding: $space-md $space-lg; font-size: $font-md; }
 
   &--primary {
     background: $color-primary;
     color: #fff;
     &:hover:not(:disabled) { background: $color-primary-dark; }
+  }
+
+  &--secondary {
+    background: $color-secondary;
+    color: #fff;
+    &:hover:not(:disabled) { filter: brightness(0.92); }
+  }
+
+  &--accent {
+    background: $color-accent;
+    color: #062a26;
+    &:hover:not(:disabled) { filter: brightness(0.95); }
   }
 
   &--danger {
@@ -33,7 +47,7 @@
 
   &--ghost {
     background: transparent;
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: $color-border;
     color: $color-text;
     &:hover:not(:disabled) {
       border-color: $color-primary;
@@ -42,34 +56,43 @@
   }
 }
 
+// ===== Campo / Input =====
 .ui-field {
   display: flex;
   flex-direction: column;
   gap: $space-xs;
 
   &__label {
-    font-size: 0.875rem;
+    font-size: $font-sm;
     color: $color-text-muted;
   }
 
   &__error {
-    font-size: 0.8rem;
+    font-size: $font-xs;
     color: $color-danger;
   }
 }
 
 .ui-input {
   background: $color-bg;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid $color-border;
   border-radius: $radius-sm;
   padding: $space-sm $space-md;
   color: $color-text;
   outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 
-  &:focus { border-color: $color-primary; }
+  &::placeholder { color: $color-text-muted; }
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+  }
+
   &--error { border-color: $color-danger; }
 }
 
+// ===== Modal =====
 .ui-modal {
   position: fixed;
   inset: 0;
@@ -84,6 +107,7 @@
     width: 100%;
     max-width: 480px;
     background: $color-surface;
+    border: 1px solid $color-border;
     border-radius: $radius-lg;
     box-shadow: $shadow-md;
     padding: $space-lg;
@@ -96,7 +120,7 @@
     margin-bottom: $space-md;
   }
 
-  &__title { font-size: 1.1rem; }
+  &__title { font-size: $font-lg; }
 
   &__close {
     background: transparent;
@@ -109,6 +133,7 @@
   }
 }
 
+// ===== Spinner =====
 .ui-spinner {
   display: flex;
   align-items: center;
@@ -118,7 +143,7 @@
   &__circle {
     width: 18px;
     height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.15);
+    border: 2px solid $color-border;
     border-top-color: $color-primary;
     border-radius: 50%;
     animation: ui-spin 0.7s linear infinite;
@@ -129,31 +154,39 @@
   to { transform: rotate(360deg); }
 }
 
+// ===== Alert =====
 .ui-alert {
   border-radius: $radius-sm;
   padding: $space-sm $space-md;
-  font-size: 0.875rem;
+  font-size: $font-sm;
   border: 1px solid transparent;
 
   &--error {
     background: rgba(229, 72, 77, 0.12);
-    border-color: $color-danger;
-    color: $color-danger;
+    border-color: rgba(229, 72, 77, 0.5);
+    color: #ff9b9e;
   }
 
   &--success {
-    background: rgba(48, 164, 108, 0.12);
-    border-color: $color-success;
+    background: rgba(46, 196, 182, 0.12);
+    border-color: rgba(46, 196, 182, 0.5);
     color: $color-success;
   }
 
+  &--warning {
+    background: rgba(245, 165, 36, 0.12);
+    border-color: rgba(245, 165, 36, 0.5);
+    color: $color-warning;
+  }
+
   &--info {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.15);
-    color: $color-text;
+    background: rgba(43, 125, 233, 0.1);
+    border-color: rgba(43, 125, 233, 0.4);
+    color: #8bb8f2;
   }
 }
 
+// ===== Confirm =====
 .ui-confirm {
   &__message {
     color: $color-text;

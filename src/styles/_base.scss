@@ -3,11 +3,15 @@
 :root {
   --color-primary: #{$color-primary};
   --color-primary-dark: #{$color-primary-dark};
+  --color-secondary: #{$color-secondary};
+  --color-accent: #{$color-accent};
   --color-bg: #{$color-bg};
   --color-surface: #{$color-surface};
+  --color-border: #{$color-border};
   --color-text: #{$color-text};
   --color-text-muted: #{$color-text-muted};
   --color-danger: #{$color-danger};
+  --color-warning: #{$color-warning};
   --color-success: #{$color-success};
 }
 
@@ -23,12 +27,28 @@ body,
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: $font-base;
   background: var(--color-bg);
   color: var(--color-text);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h1 { font-size: $font-2xl; }
+h2 { font-size: $font-xl; }
+h3 { font-size: $font-lg; }
 
 a {
   color: var(--color-primary);
@@ -44,4 +64,34 @@ input,
 textarea,
 select {
   font-family: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: $radius-sm;
+}
+
+::selection {
+  background: rgba(255, 107, 53, 0.3);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
 }

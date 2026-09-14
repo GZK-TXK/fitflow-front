@@ -1,0 +1,21 @@
+@use 'variables' as *;
+
+.profile {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    max-width: 420px;
+    margin-top: $space-lg;
+  }
+
+  &__email {
+    color: $color-text-muted;
+    font-size: 0.9rem;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

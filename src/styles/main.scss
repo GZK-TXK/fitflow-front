@@ -2,8 +2,4 @@
 @use 'mixins' as *;
 @use 'base';
 @use 'ui';
-
-.app {
-  min-height: 100%;
-  padding: $space-lg;
-}
+@use 'patterns';

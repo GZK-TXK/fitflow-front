@@ -1,20 +1,37 @@
 import { NavLink } from 'react-router-dom'
+import {
+  LayoutDashboard,
+  Users,
+  Dumbbell,
+  ClipboardList,
+  CalendarDays,
+  UserCog,
+  CreditCard,
+  UserRound,
+} from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth.js'
 
-const links = [
-  { to: '/', label: 'Dashboard', end: true },
-  { to: '/clients', label: 'Clientes' },
-  { to: '/exercises', label: 'Ejercicios' },
-  { to: '/workouts', label: 'Rutinas' },
+const trainerLinks = [
+  { to: '/', label: 'Dashboard', end: true, icon: LayoutDashboard },
+  { to: '/clients', label: 'Clientes', icon: Users },
+  { to: '/exercises', label: 'Ejercicios', icon: Dumbbell },
+  { to: '/workouts', label: 'Rutinas', icon: ClipboardList },
+  { to: '/schedule', label: 'Calendario', icon: CalendarDays },
+]
+
+const clientLinks = [
+  { to: '/portal', label: 'Mis rutinas', end: true, icon: ClipboardList },
+  { to: '/portal/calendar', label: 'Calendario', icon: CalendarDays },
 ]
 
 const adminLinks = [
-  { to: '/admin', label: 'Panel', end: true },
-  { to: '/admin/trainers', label: 'Entrenadores' },
-  { to: '/admin/subscriptions', label: 'Suscripciones' },
+  { to: '/admin', label: 'Panel', end: true, icon: LayoutDashboard },
+  { to: '/admin/users', label: 'Usuarios', icon: UserCog },
+  { to: '/admin/subscriptions', label: 'Suscripciones', icon: CreditCard },
 ]
 
 function renderLink(link, onClose) {
+  const Icon = link.icon
   return (
     <NavLink
       key={link.to}
@@ -25,7 +42,8 @@ function renderLink(link, onClose) {
         `sidebar__link${isActive ? ' sidebar__link--active' : ''}`
       }
     >
-      {link.label}
+      <Icon className="sidebar__icon" size={18} aria-hidden="true" />
+      <span>{link.label}</span>
     </NavLink>
   )
 }
@@ -33,6 +51,9 @@ function renderLink(link, onClose) {
 export default function Sidebar({ isOpen = false, onClose = () => {} }) {
   const { user } = useAuth()
   const isAdmin = user?.role === 'ADMIN'
+  const isClient = user?.role === 'CLIENT'
+
+  const links = isClient ? clientLinks : trainerLinks
 
   return (
     <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
@@ -49,7 +70,22 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
       </div>
 
       <nav className="sidebar__nav">
+        <span className="sidebar__section">Principal</span>
         {links.map((link) => renderLink(link, onClose))}
+
+        {!isClient && (
+          <NavLink
+            to="/profile"
+            onClick={onClose}
+            className={({ isActive }) =>
+              `sidebar__link${isActive ? ' sidebar__link--active' : ''}`
+            }
+          >
+            <UserRound className="sidebar__icon" size={18} aria-hidden="true" />
+            <span>Mi perfil</span>
+          </NavLink>
+        )}
+
         {isAdmin && (
           <>
             <span className="sidebar__section">Admin</span>

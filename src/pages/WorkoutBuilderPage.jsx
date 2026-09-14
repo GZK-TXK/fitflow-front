@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Dumbbell } from 'lucide-react'
 import { useWorkout } from '../hooks/useWorkouts.js'
 import { useExercises } from '../hooks/useExercises.js'
 import Button from '../components/ui/Button.jsx'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
+import PageHeader from '../components/ui/PageHeader.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
 import ConfirmDialog from '../components/ui/ConfirmDialog.jsx'
 import WorkoutItemFormModal from '../components/workouts/WorkoutItemFormModal.jsx'
 import '../styles/workouts.scss'
@@ -61,18 +64,16 @@ export default function WorkoutBuilderPage() {
 
       {workout && (
         <>
-          <header className="workout-builder__header">
-            <div>
-              <h1>{workout.title}</h1>
-              <p className="workout-builder__meta">
-                {workout.client?.name ? `Cliente: ${workout.client.name}` : 'Sin cliente'}
-              </p>
-              {workout.description && (
-                <p className="workout-builder__description">{workout.description}</p>
-              )}
-            </div>
-            <Button onClick={openCreate}>Añadir ejercicio</Button>
-          </header>
+          <PageHeader
+            title={workout.title}
+            subtitle={[
+              workout.client?.name ? `Cliente: ${workout.client.name}` : 'Sin cliente',
+              workout.description,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+            actions={<Button onClick={openCreate}>Añadir ejercicio</Button>}
+          />
 
           {workout.items?.length ? (
             <ul className="workout-builder__items">
@@ -98,7 +99,11 @@ export default function WorkoutBuilderPage() {
               ))}
             </ul>
           ) : (
-            <p className="workouts__empty">Esta rutina aún no tiene ejercicios.</p>
+            <EmptyState
+              icon={<Dumbbell size={32} />}
+              message="Esta rutina aún no tiene ejercicios."
+              action={<Button onClick={openCreate}>Añadir ejercicio</Button>}
+            />
           )}
         </>
       )}

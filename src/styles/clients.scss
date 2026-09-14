@@ -1,20 +1,6 @@
 @use 'variables' as *;
 
 .clients {
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: $space-lg;
-    gap: $space-md;
-    flex-wrap: wrap;
-  }
-
-  &__empty {
-    color: $color-text-muted;
-    padding: $space-lg 0;
-  }
-
   &__list {
     list-style: none;
     display: flex;
@@ -28,6 +14,7 @@
     justify-content: space-between;
     gap: $space-md;
     background: $color-surface;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
     padding: $space-md $space-lg;
     box-shadow: $shadow-sm;
@@ -46,7 +33,7 @@
   }
 
   &__meta {
-    font-size: 0.85rem;
+    font-size: $font-sm;
     color: $color-text-muted;
   }
 
@@ -82,17 +69,14 @@
     &:hover { color: $color-primary; }
   }
 
-  &__header {
-    margin-bottom: $space-md;
-  }
-
   &__meta {
     color: $color-text-muted;
-    font-size: 0.9rem;
+    font-size: $font-sm;
   }
 
   &__notes {
     background: $color-surface;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
     padding: $space-md;
     margin: $space-md 0;
@@ -101,7 +85,7 @@
 
   &__subtitle {
     margin: $space-lg 0 $space-md;
-    font-size: 1.15rem;
+    font-size: $font-lg;
   }
 }
 
@@ -117,5 +101,36 @@
 
   .clients__actions .ui-button {
     flex: 1;
+  }
+}
+
+.client-access {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+  flex-wrap: wrap;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: $space-md $space-lg;
+  box-shadow: $shadow-sm;
+  margin: $space-md 0;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__status {
+    font-size: $font-sm;
+    color: $color-text-muted;
+
+    &--on { color: $color-success; }
   }
 }

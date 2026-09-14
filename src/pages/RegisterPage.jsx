@@ -10,6 +10,7 @@ export default function RegisterPage() {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [pending, setPending] = useState(false)
 
   const handleChange = (event) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }))
@@ -37,7 +38,7 @@ export default function RegisterPage() {
     setLoading(true)
     try {
       await register({ name: form.name, email: form.email, password: form.password })
-      navigate('/', { replace: true })
+      setPending(true)
     } catch (err) {
       setError(err.message || 'No se pudo registrar la cuenta')
     } finally {
@@ -56,6 +57,23 @@ export default function RegisterPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (pending) {
+    return (
+      <div className="auth">
+        <div className="auth__card">
+          <h1 className="auth__title">Solicitud enviada</h1>
+          <p className="auth__subtitle">
+            Tu cuenta se ha creado y queda pendiente de aprobación por el administrador.
+            Podrás iniciar sesión cuando sea activada.
+          </p>
+          <Link to="/login" className="auth__submit auth__submit--link">
+            Ir a iniciar sesión
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (

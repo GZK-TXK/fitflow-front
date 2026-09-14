@@ -1,0 +1,127 @@
+@use 'variables' as *;
+
+.portal {
+  &__trainer {
+    display: flex;
+    flex-direction: column;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    padding: $space-md $space-lg;
+    box-shadow: $shadow-sm;
+    margin: $space-lg 0;
+  }
+
+  &__trainer-label {
+    font-size: $font-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $color-text-muted;
+  }
+
+  &__trainer-name {
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__trainer-meta {
+    font-size: $font-sm;
+    color: $color-text-muted;
+  }
+
+  &__back {
+    display: inline-block;
+    margin-bottom: $space-md;
+    color: $color-text-muted;
+
+    &:hover { color: $color-primary; }
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-md;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    padding: $space-md $space-lg;
+    box-shadow: $shadow-sm;
+  }
+
+  &__item-name {
+    font-weight: 600;
+    color: $color-text;
+
+    &:hover { color: $color-primary; }
+  }
+
+  &__item-meta {
+    font-size: $font-sm;
+    color: $color-text-muted;
+  }
+
+  &__exercises {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: $space-sm;
+  }
+
+  &__exercise {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-md;
+    background: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    padding: $space-md $space-lg;
+    box-shadow: $shadow-sm;
+  }
+
+  &__exercise-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__exercise-name {
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__exercise-category {
+    align-self: flex-start;
+    font-size: $font-xs;
+    color: $color-primary;
+    background: rgba(255, 107, 53, 0.12);
+    border-radius: 999px;
+    padding: 2px $space-sm;
+    margin: $space-xs 0;
+  }
+
+  &__exercise-meta {
+    font-size: $font-sm;
+    color: $color-text-muted;
+  }
+
+  &__exercise-video {
+    white-space: nowrap;
+    font-size: $font-sm;
+  }
+}
+
+@media (max-width: $bp-md) {
+  .portal__item,
+  .portal__exercise {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

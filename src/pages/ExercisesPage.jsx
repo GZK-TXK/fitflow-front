@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react'
+import { Dumbbell } from 'lucide-react'
 import { useExercises } from '../hooks/useExercises.js'
 import Button from '../components/ui/Button.jsx'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
+import PageHeader from '../components/ui/PageHeader.jsx'
+import EmptyState from '../components/ui/EmptyState.jsx'
 import ConfirmDialog from '../components/ui/ConfirmDialog.jsx'
 import ExerciseFormModal from '../components/exercises/ExerciseFormModal.jsx'
 import '../styles/exercises.scss'
@@ -59,10 +62,10 @@ export default function ExercisesPage() {
 
   return (
     <section className="exercises">
-      <header className="exercises__header">
-        <h1>Ejercicios</h1>
-        <Button onClick={openCreate}>Nuevo ejercicio</Button>
-      </header>
+      <PageHeader
+        title="Ejercicios"
+        actions={<Button onClick={openCreate}>Nuevo ejercicio</Button>}
+      />
 
       <Alert variant="error">{error || actionError}</Alert>
 
@@ -86,7 +89,10 @@ export default function ExercisesPage() {
           </div>
 
           {visible.length === 0 ? (
-            <p className="exercises__empty">No hay ejercicios en esta categoría.</p>
+            <EmptyState
+              icon={<Dumbbell size={32} />}
+              message="No hay ejercicios en esta categoría."
+            />
           ) : (
             <div className="exercises__grid">
               {visible.map((exercise) => (

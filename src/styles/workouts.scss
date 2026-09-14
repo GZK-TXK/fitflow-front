@@ -1,20 +1,6 @@
 @use 'variables' as *;
 
 .workouts {
-  &__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: $space-lg;
-    gap: $space-md;
-    flex-wrap: wrap;
-  }
-
-  &__empty {
-    color: $color-text-muted;
-    padding: $space-lg 0;
-  }
-
   &__list {
     list-style: none;
     display: flex;
@@ -28,6 +14,7 @@
     justify-content: space-between;
     gap: $space-md;
     background: $color-surface;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
     padding: $space-md $space-lg;
     box-shadow: $shadow-sm;
@@ -46,7 +33,7 @@
   }
 
   &__meta {
-    font-size: 0.85rem;
+    font-size: $font-sm;
     color: $color-text-muted;
   }
 
@@ -89,25 +76,6 @@
     &:hover { color: $color-primary; }
   }
 
-  &__header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: $space-md;
-    flex-wrap: wrap;
-    margin-bottom: $space-lg;
-  }
-
-  &__meta {
-    color: $color-text-muted;
-    font-size: 0.9rem;
-  }
-
-  &__description {
-    color: $color-text;
-    margin-top: $space-sm;
-  }
-
   &__items {
     list-style: none;
     display: flex;
@@ -121,6 +89,7 @@
     justify-content: space-between;
     gap: $space-md;
     background: $color-surface;
+    border: 1px solid $color-border;
     border-radius: $radius-md;
     padding: $space-md $space-lg;
     box-shadow: $shadow-sm;
@@ -137,7 +106,7 @@
   }
 
   &__item-meta {
-    font-size: 0.85rem;
+    font-size: $font-sm;
     color: $color-text-muted;
   }
 
@@ -166,10 +135,5 @@
 
   .workout-item-form__row {
     grid-template-columns: 1fr;
-  }
-
-  .workout-builder__header {
-    flex-direction: column;
-    align-items: stretch;
   }
 }
