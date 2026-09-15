@@ -8,6 +8,7 @@ import {
   UserCog,
   CreditCard,
   UserRound,
+  FileCode,
 } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth.js'
 
@@ -22,12 +23,14 @@ const trainerLinks = [
 const clientLinks = [
   { to: '/portal', label: 'Mis rutinas', end: true, icon: ClipboardList },
   { to: '/portal/calendar', label: 'Calendario', icon: CalendarDays },
+  { to: '/portal/profile', label: 'Mi perfil', icon: UserRound },
 ]
 
 const adminLinks = [
   { to: '/admin', label: 'Panel', end: true, icon: LayoutDashboard },
   { to: '/admin/users', label: 'Usuarios', icon: UserCog },
   { to: '/admin/subscriptions', label: 'Suscripciones', icon: CreditCard },
+  { to: '/admin/docs', label: 'API Docs', icon: FileCode },
 ]
 
 function renderLink(link, onClose) {
@@ -58,7 +61,10 @@ export default function Sidebar({ isOpen = false, onClose = () => {} }) {
   return (
     <aside className={`sidebar${isOpen ? ' sidebar--open' : ''}`}>
       <div className="sidebar__top">
-        <div className="sidebar__brand">FitFlow</div>
+        <div className="sidebar__brand">
+          <img src="/logo.svg" alt="" width="26" height="26" />
+          <span>FitFlow</span>
+        </div>
         <button
           className="sidebar__close"
           type="button"

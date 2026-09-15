@@ -10,8 +10,8 @@
 
   &__item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
     gap: $space-md;
     background: $color-surface;
     border: 1px solid $color-border;
@@ -25,11 +25,26 @@
     flex-direction: column;
   }
 
+  &__name-row {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-sm;
+  }
+
   &__name {
     font-weight: 600;
     color: $color-text;
 
     &:hover { color: $color-primary; }
+  }
+
+  &__online {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $color-success;
+    box-shadow: 0 0 0 3px rgba(46, 230, 166, 0.2);
+    flex-shrink: 0;
   }
 
   &__meta {
@@ -40,6 +55,11 @@
   &__actions {
     display: flex;
     gap: $space-xs;
+    width: 100%;
+
+    .ui-button {
+      flex: 1;
+    }
   }
 }
 
@@ -89,21 +109,6 @@
   }
 }
 
-@media (max-width: $bp-md) {
-  .clients__item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .clients__actions {
-    width: 100%;
-  }
-
-  .clients__actions .ui-button {
-    flex: 1;
-  }
-}
-
 .client-access {
   display: flex;
   align-items: center;
@@ -132,5 +137,24 @@
     color: $color-text-muted;
 
     &--on { color: $color-success; }
+    &--pending { color: $color-warning; }
+    &--off { color: $color-text-muted; }
+  }
+}
+
+@media (min-width: $bp-md) {
+  .clients__item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-md;
+  }
+
+  .clients__actions {
+    width: auto;
+
+    .ui-button {
+      flex: 0 1 auto;
+    }
   }
 }

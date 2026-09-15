@@ -8,7 +8,7 @@ import Alert from '../components/ui/Alert.jsx'
 import Button from '../components/ui/Button.jsx'
 import PageHeader from '../components/ui/PageHeader.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
-import ConfirmDialog from '../components/ui/ConfirmDialog.jsx'
+import InviteModal from '../components/invitations/InviteModal.jsx'
 import '../styles/clients.scss'
 
 export default function ClientDetailPage() {
@@ -18,34 +18,18 @@ export default function ClientDetailPage() {
   const [accessError, setAccessError] = useState('')
   const [accessMessage, setAccessMessage] = useState('')
   const [busy, setBusy] = useState(false)
-  const [confirmRevoke, setConfirmRevoke] = useState(false)
+  const [inviteOpen, setInviteOpen] = useState(false)
 
-  const grantAccess = async () => {
+  const setAccess = async (status) => {
     setBusy(true)
     setAccessError('')
     setAccessMessage('')
     try {
-      const data = await api.post(`/api/clients/${id}/invite`)
-      setAccessMessage(data.message || 'Acceso concedido')
+      const data = await api.put(`/api/clients/${id}/access`, { status })
+      setAccessMessage(data.message || 'Actualizado')
       await reloadClient()
     } catch (err) {
-      setAccessError(err.message || 'No se pudo dar acceso')
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  const revokeAccess = async () => {
-    setBusy(true)
-    setAccessError('')
-    setAccessMessage('')
-    try {
-      await api.delete(`/api/clients/${id}/invite`)
-      setAccessMessage('Acceso revocado')
-      setConfirmRevoke(false)
-      await reloadClient()
-    } catch (err) {
-      setAccessError(err.message || 'No se pudo revocar el acceso')
+      setAccessError(err.message || 'No se pudo actualizar el acceso')
     } finally {
       setBusy(false)
     }
@@ -53,7 +37,21 @@ export default function ClientDetailPage() {
 
   if (loading) return <Spinner label="Cargando cliente..." />
 
-  const hasAccess = Boolean(client?.accountUserId)
+  const hasAccount = Boolean(client?.accountUserId)
+  const accountStatus = client?.account?.status
+
+  let statusLabel = 'Sin registrar'
+  let statusModifier = 'client-access__status--off'
+  if (hasAccount && accountStatus === 'ACTIVE') {
+    statusLabel = `Con acceso${client.account?.email ? ` (${client.account.email})` : ''}`
+    statusModifier = 'client-access__status--on'
+  } else if (hasAccount && accountStatus === 'PENDING') {
+    statusLabel = 'Pendiente de acceso'
+    statusModifier = 'client-access__status--pending'
+  } else if (hasAccount && accountStatus === 'DISABLED') {
+    statusLabel = 'Acceso revocado'
+    statusModifier = 'client-access__status--off'
+  }
 
   return (
     <section className="client-detail">
@@ -66,27 +64,6 @@ export default function ClientDetailPage() {
           <PageHeader
             title={client.name}
             subtitle={[client.email || 'Sin email', client.phone].filter(Boolean).join(' · ')}
-            actions={
-              hasAccess ? (
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => setConfirmRevoke(true)}
-                  disabled={busy}
-                >
-                  Quitar acceso
-                </Button>
-              ) : (
-                <Button
-                  size="sm"
-                  onClick={grantAccess}
-                  loading={busy}
-                  disabled={!client.email}
-                >
-                  Dar acceso
-                </Button>
-              )
-            }
           />
 
           {client.notes && <p className="client-detail__notes">{client.notes}</p>}
@@ -94,21 +71,39 @@ export default function ClientDetailPage() {
           <div className="client-access">
             <div className="client-access__info">
               <span className="client-access__title">Acceso al portal</span>
-              <span
-                className={`client-access__status${
-                  hasAccess ? ' client-access__status--on' : ''
-                }`}
-              >
-                {hasAccess
-                  ? `Con acceso${client.account?.email ? ` (${client.account.email})` : ''}`
-                  : 'Sin acceso'}
-              </span>
+              <span className={`client-access__status ${statusModifier}`}>{statusLabel}</span>
+            </div>
+            <div className="client-access__actions">
+              {!hasAccount && (
+                <Button
+                  size="sm"
+                  onClick={() => setInviteOpen(true)}
+                  disabled={!client.email}
+                >
+                  Generar enlace de invitación
+                </Button>
+              )}
+              {hasAccount && accountStatus !== 'ACTIVE' && (
+                <Button size="sm" onClick={() => setAccess('ACTIVE')} loading={busy}>
+                  Dar acceso
+                </Button>
+              )}
+              {hasAccount && accountStatus === 'ACTIVE' && (
+                <Button
+                  size="sm"
+                  variant="danger"
+                  onClick={() => setAccess('DISABLED')}
+                  disabled={busy}
+                >
+                  Quitar acceso
+                </Button>
+              )}
             </div>
           </div>
 
-          {!client.email && !hasAccess && (
+          {!client.email && !hasAccount && (
             <p className="client-detail__meta">
-              Añade un email al cliente para poder darle acceso.
+              Añade un email al cliente para poder invitarlo.
             </p>
           )}
 
@@ -130,14 +125,12 @@ export default function ClientDetailPage() {
         </>
       )}
 
-      <ConfirmDialog
-        open={confirmRevoke}
-        title="Quitar acceso"
-        message={`¿Quitar el acceso al portal a ${client?.name}?`}
-        confirmLabel="Quitar acceso"
-        loading={busy}
-        onConfirm={revokeAccess}
-        onCancel={() => setConfirmRevoke(false)}
+      <InviteModal
+        open={inviteOpen}
+        type="CLIENT"
+        title="Invitar cliente"
+        fixedEmail={client?.email || ''}
+        onClose={() => setInviteOpen(false)}
       />
     </section>
   )

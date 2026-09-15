@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+.ui-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid $color-border;
+  flex-shrink: 0;
+}
+
+.ui-avatar--fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(46, 230, 166, 0.15);
+  color: $color-primary;
+  font-weight: 700;
+}
+
+.navbar__user {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  min-width: 0;
+}
+
+.profile__avatar {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+  margin-bottom: $space-md;
+}
+
+.portal__trainer-row {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+}

@@ -1,61 +1,71 @@
-import { Link, useParams } from 'react-router-dom'
-import { useMyWorkout } from '../hooks/useMe.js'
+import { Link } from 'react-router-dom'
+import { ClipboardList } from 'lucide-react'
+import { useMyProfile, useMyWorkouts } from '../hooks/useMe.js'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
 import PageHeader from '../components/ui/PageHeader.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
+import Avatar from '../components/ui/Avatar.jsx'
 import '../styles/portal.scss'
 
-export default function ClientWorkoutDetailPage() {
-  const { id } = useParams()
-  const { workout, loading, error } = useMyWorkout(id)
+export default function ClientWorkoutsPage() {
+  const { profile, loading: loadingProfile, error: profileError } = useMyProfile()
+  const { workouts, loading, error } = useMyWorkouts()
 
-  if (loading) return <Spinner label="Cargando rutina..." />
+  if (profileError) {
+    return (
+      <section className="portal">
+        <PageHeader title="Acceso pendiente" />
+        <EmptyState message={profileError} />
+      </section>
+    )
+  }
 
   return (
     <section className="portal">
-      <Link to="/portal" className="portal__back">← Volver a mis rutinas</Link>
+      <PageHeader title="Mis rutinas" />
 
       <Alert variant="error">{error}</Alert>
 
-      {workout && (
-        <>
-          <PageHeader title={workout.title} subtitle={workout.description} />
+      {!loadingProfile && profile && (
+        <div className="portal__trainer">
+          <div className="portal__trainer-row">
+            <Avatar
+              user={{ name: profile.trainer?.name, avatarUrl: profile.trainer?.avatarUrl }}
+              size={48}
+            />
+            <div>
+              <span className="portal__trainer-label">Tu entrenador</span>
+              <span className="portal__trainer-name">{profile.trainer?.name}</span>
+              <span className="portal__trainer-meta">
+                {profile.trainer?.email}
+                {profile.trainer?.phone ? ` · ${profile.trainer.phone}` : ''}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
 
-          {workout.items?.length ? (
-            <ul className="portal__exercises">
-              {workout.items.map((item) => (
-                <li key={item.id} className="portal__exercise">
-                  <div className="portal__exercise-info">
-                    <span className="portal__exercise-name">{item.exercise?.name}</span>
-                    {item.exercise?.category && (
-                      <span className="portal__exercise-category">
-                        {item.exercise.category}
-                      </span>
-                    )}
-                    <span className="portal__exercise-meta">
-                      {item.sets ?? '-'} series × {item.reps ?? '-'} reps
-                      {item.weight != null ? ` · ${item.weight} kg` : ''}
-                      {item.restTime != null ? ` · ${item.restTime}s descanso` : ''}
-                    </span>
-                  </div>
-                  {item.exercise?.videoUrl && (
-                    <a
-                      className="portal__exercise-video"
-                      href={item.exercise.videoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Ver vídeo
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <EmptyState message="Esta rutina aún no tiene ejercicios." />
-          )}
-        </>
+      {loading ? (
+        <Spinner label="Cargando tus rutinas..." />
+      ) : workouts.length === 0 ? (
+        <EmptyState
+          icon={<ClipboardList size={32} />}
+          message="Aún no tienes rutinas asignadas."
+        />
+      ) : (
+        <ul className="portal__list">
+          {workouts.map((workout) => (
+            <li key={workout.id} className="portal__item">
+              <Link to={`/portal/workouts/${workout.id}`} className="portal__item-name">
+                {workout.title}
+              </Link>
+              <span className="portal__item-meta">
+                {workout.items?.length ?? 0} ejercicios
+              </span>
+            </li>
+          ))}
+        </ul>
       )}
     </section>
   )

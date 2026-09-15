@@ -13,16 +13,27 @@
     background: $color-surface;
     border-radius: $radius-lg;
     box-shadow: $shadow-md;
-    padding: $space-xl;
+    padding: $space-lg;
     display: flex;
     flex-direction: column;
     gap: $space-md;
   }
 
+  &__brand {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__logo {
+    height: 44px;
+    width: auto;
+  }
+
   &__title {
-    font-size: 2rem;
+    font-size: $font-2xl;
     color: $color-primary;
     text-align: center;
+    margin: 0;
   }
 
   &__subtitle {
@@ -129,8 +140,8 @@
   }
 }
 
-@media (max-width: $bp-md) {
+@media (min-width: $bp-md) {
   .auth__card {
-    padding: $space-lg;
+    padding: $space-xl;
   }
 }

@@ -3,7 +3,7 @@
 .dashboard {
   &__stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: 1fr;
     gap: $space-md;
     margin: $space-lg 0;
   }
@@ -60,8 +60,8 @@
   }
 }
 
-@media (max-width: $bp-sm) {
+@media (min-width: $bp-sm) {
   .dashboard__stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   }
 }

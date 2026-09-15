@@ -11,8 +11,9 @@ const parseResponse = async (response) => {
   }
 }
 
-const request = async (path, { method = 'GET', body, auth = true } = {}) => {
-  const headers = { 'Content-Type': 'application/json' }
+const request = async (path, { method = 'GET', body, auth = true, isForm = false } = {}) => {
+  const headers = {}
+  if (!isForm) headers['Content-Type'] = 'application/json'
 
   if (auth) {
     const token = getToken()
@@ -20,7 +21,7 @@ const request = async (path, { method = 'GET', body, auth = true } = {}) => {
   }
 
   const options = { method, headers }
-  if (body !== undefined) options.body = JSON.stringify(body)
+  if (body !== undefined) options.body = isForm ? body : JSON.stringify(body)
 
   let response
   try {
@@ -51,4 +52,6 @@ export const api = {
   post: (path, body, opts) => request(path, { ...opts, method: 'POST', body }),
   put: (path, body, opts) => request(path, { ...opts, method: 'PUT', body }),
   delete: (path, opts) => request(path, { ...opts, method: 'DELETE' }),
+  upload: (path, formData, opts) =>
+    request(path, { ...opts, method: 'POST', body: formData, isForm: true }),
 }

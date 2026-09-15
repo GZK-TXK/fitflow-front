@@ -1,0 +1,30 @@
+@use 'variables' as *;
+
+.invite-form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.invite-link {
+  margin-top: $space-md;
+  display: flex;
+  flex-direction: column;
+  gap: $space-sm;
+
+  &__label {
+    font-size: $font-sm;
+    color: $color-text-muted;
+  }
+
+  &__value {
+    display: block;
+    background: $color-bg;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    padding: $space-sm $space-md;
+    font-size: $font-xs;
+    word-break: break-all;
+    color: $color-text;
+  }
+}

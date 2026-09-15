@@ -7,6 +7,7 @@ import Alert from '../components/ui/Alert.jsx'
 import PageHeader from '../components/ui/PageHeader.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import ConfirmDialog from '../components/ui/ConfirmDialog.jsx'
+import VideoModal from '../components/ui/VideoModal.jsx'
 import ExerciseFormModal from '../components/exercises/ExerciseFormModal.jsx'
 import '../styles/exercises.scss'
 
@@ -20,6 +21,7 @@ export default function ExercisesPage() {
   const [deleting, setDeleting] = useState(false)
   const [actionError, setActionError] = useState('')
   const [category, setCategory] = useState('Todas')
+  const [videoExercise, setVideoExercise] = useState(null)
 
   const categories = useMemo(() => {
     const unique = new Set(exercises.map((e) => e.category).filter(Boolean))
@@ -102,14 +104,13 @@ export default function ExercisesPage() {
                     <span className="exercises__category">{exercise.category}</span>
                   )}
                   {exercise.videoUrl && (
-                    <a
+                    <button
+                      type="button"
                       className="exercises__video"
-                      href={exercise.videoUrl}
-                      target="_blank"
-                      rel="noreferrer"
+                      onClick={() => setVideoExercise(exercise)}
                     >
                       Ver vídeo
-                    </a>
+                    </button>
                   )}
                   <div className="exercises__actions">
                     <Button size="sm" variant="ghost" onClick={() => openEdit(exercise)}>
@@ -131,6 +132,13 @@ export default function ExercisesPage() {
         exercise={editing}
         onClose={() => setFormOpen(false)}
         onSubmit={handleSubmit}
+      />
+
+      <VideoModal
+        open={Boolean(videoExercise)}
+        url={videoExercise?.videoUrl}
+        title={videoExercise?.name}
+        onClose={() => setVideoExercise(null)}
       />
 
       <ConfirmDialog

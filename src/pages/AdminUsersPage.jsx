@@ -2,12 +2,15 @@ import { useState } from 'react'
 import { Users } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth.js'
 import { useUsers } from '../hooks/useAdmin.js'
+import { usePresence } from '../hooks/usePresence.js'
+import { formatRelative } from '../lib/time.js'
 import Button from '../components/ui/Button.jsx'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
 import PageHeader from '../components/ui/PageHeader.jsx'
 import EmptyState from '../components/ui/EmptyState.jsx'
 import ConfirmDialog from '../components/ui/ConfirmDialog.jsx'
+import InviteModal from '../components/invitations/InviteModal.jsx'
 import '../styles/admin.scss'
 
 const statusLabels = { ACTIVE: 'Activo', PENDING: 'Pendiente', DISABLED: 'Desactivado' }
@@ -25,12 +28,15 @@ const roleFilters = [
 
 export default function AdminUsersPage() {
   const { user } = useAuth()
+  const { isOnline, lastSeen } = usePresence()
   const [roleFilter, setRoleFilter] = useState('')
   const { users, loading, error, updateStatus, updateRole, deleteUser } = useUsers(roleFilter)
 
   const [toDelete, setToDelete] = useState(null)
   const [deleting, setDeleting] = useState(false)
   const [actionError, setActionError] = useState('')
+  const [inviteTrainer, setInviteTrainer] = useState(false)
+  const [inviteClient, setInviteClient] = useState(false)
 
   const runAction = async (fn) => {
     setActionError('')
@@ -50,7 +56,18 @@ export default function AdminUsersPage() {
 
   return (
     <section className="admin">
-      <PageHeader title="Usuarios" subtitle="Aprobar, activar o desactivar cuentas" />
+      <PageHeader
+        title="Usuarios"
+        subtitle="Aprobar, activar o desactivar cuentas"
+        actions={
+          <>
+            <Button onClick={() => setInviteTrainer(true)}>Invitar entrenador</Button>
+            <Button variant="ghost" onClick={() => setInviteClient(true)}>
+              Invitar cliente
+            </Button>
+          </>
+        }
+      />
 
       <Alert variant="error">{error || actionError}</Alert>
 
@@ -82,6 +99,7 @@ export default function AdminUsersPage() {
                 <th>Email</th>
                 <th>Rol</th>
                 <th>Estado</th>
+                <th>Conexión</th>
                 <th>Clientes</th>
                 <th>Ejercicios</th>
                 <th>Acciones</th>
@@ -90,6 +108,8 @@ export default function AdminUsersPage() {
             <tbody>
               {users.map((u) => {
                 const isSelf = u.id === user?.id
+                const online = isOnline(u.id) || u.isOnline
+                const seenAt = lastSeen[u.id] || u.lastSeenAt
                 return (
                   <tr key={u.id}>
                     <td>{u.name}</td>
@@ -107,6 +127,18 @@ export default function AdminUsersPage() {
                       <span className={`admin__badge ${statusClass[u.status] || ''}`}>
                         {statusLabels[u.status] || u.status}
                       </span>
+                    </td>
+                    <td>
+                      {online ? (
+                        <span className="admin__presence admin__presence--online">
+                          <span className="admin__presence-dot" />
+                          En línea
+                        </span>
+                      ) : (
+                        <span className="admin__presence">
+                          {seenAt ? formatRelative(seenAt) : 'Sin conexión'}
+                        </span>
+                      )}
                     </td>
                     <td>{u._count?.clients ?? 0}</td>
                     <td>{u._count?.exercises ?? 0}</td>
@@ -171,6 +203,19 @@ export default function AdminUsersPage() {
           </table>
         </div>
       )}
+
+      <InviteModal
+        open={inviteTrainer}
+        type="TRAINER"
+        title="Invitar entrenador"
+        onClose={() => setInviteTrainer(false)}
+      />
+      <InviteModal
+        open={inviteClient}
+        type="CLIENT"
+        title="Invitar cliente"
+        onClose={() => setInviteClient(false)}
+      />
 
       <ConfirmDialog
         open={Boolean(toDelete)}

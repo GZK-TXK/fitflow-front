@@ -15,7 +15,9 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.3",
-    "sass": "^1.104.0"
+    "sass": "^1.104.0",
+    "socket.io-client": "^4.8.3",
+    "swagger-ui-react": "^5.32.15"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",

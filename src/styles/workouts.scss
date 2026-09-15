@@ -10,8 +10,8 @@
 
   &__item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
     gap: $space-md;
     background: $color-surface;
     border: 1px solid $color-border;
@@ -40,6 +40,11 @@
   &__actions {
     display: flex;
     gap: $space-xs;
+    width: 100%;
+
+    .ui-button {
+      flex: 1;
+    }
   }
 }
 
@@ -63,7 +68,7 @@
 
 .workout-item-form__row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: $space-md;
 }
 
@@ -85,8 +90,8 @@
 
   &__item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
     gap: $space-md;
     background: $color-surface;
     border: 1px solid $color-border;
@@ -113,27 +118,33 @@
   &__item-actions {
     display: flex;
     gap: $space-xs;
+    width: 100%;
+
+    .ui-button {
+      flex: 1;
+    }
   }
 }
 
-@media (max-width: $bp-md) {
+@media (min-width: $bp-md) {
   .workouts__item,
   .workout-builder__item {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-md;
   }
 
   .workouts__actions,
   .workout-builder__item-actions {
-    width: 100%;
-  }
+    width: auto;
 
-  .workouts__actions .ui-button,
-  .workout-builder__item-actions .ui-button {
-    flex: 1;
+    .ui-button {
+      flex: 0 1 auto;
+    }
   }
 
   .workout-item-form__row {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }

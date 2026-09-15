@@ -26,6 +26,10 @@ export function AuthProvider({ children }) {
     return data.user
   }, [])
 
+  const updateUser = useCallback((partial) => {
+    setUser((prev) => (prev ? { ...prev, ...partial } : prev))
+  }, [])
+
   const login = useCallback(
     async (credentials) => {
       const data = await api.post('/api/auth/login', credentials, { auth: false })
@@ -39,16 +43,23 @@ export function AuthProvider({ children }) {
     return data
   }, [])
 
-  const loginWithGoogle = useCallback(async () => {
-    const [firebaseAuth, firebaseConfig] = await Promise.all([
-      import('firebase/auth'),
-      import('../config/firebase.js'),
-    ])
-    const result = await firebaseAuth.signInWithPopup(firebaseConfig.auth, firebaseConfig.googleProvider)
-    const idToken = await result.user.getIdToken()
-    const data = await api.post('/api/auth/google', { idToken }, { auth: false })
-    return applySession(data)
-  }, [applySession])
+  const loginWithGoogle = useCallback(
+    async (inviteToken) => {
+      const [firebaseAuth, firebaseConfig] = await Promise.all([
+        import('firebase/auth'),
+        import('../config/firebase.js'),
+      ])
+      const result = await firebaseAuth.signInWithPopup(
+        firebaseConfig.auth,
+        firebaseConfig.googleProvider
+      )
+      const idToken = await result.user.getIdToken()
+      const body = inviteToken ? { idToken, inviteToken } : { idToken }
+      const data = await api.post('/api/auth/google', body, { auth: false })
+      return applySession(data)
+    },
+    [applySession]
+  )
 
   const value = useMemo(
     () => ({
@@ -59,8 +70,9 @@ export function AuthProvider({ children }) {
       register,
       loginWithGoogle,
       logout,
+      updateUser,
     }),
-    [user, token, login, register, loginWithGoogle, logout]
+    [user, token, login, register, loginWithGoogle, logout, updateUser]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

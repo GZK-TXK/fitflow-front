@@ -1,22 +1,22 @@
-// ===== Marca (derivada del logo) =====
-$color-primary: #ff6b35;   // naranja "FLOW"
-$color-primary-dark: #e85a2a;
-$color-secondary: #2b7de9; // azul "FIT"
-$color-accent: #2ec4b6;    // teal
+// ===== Marca (menta / negro / coral) =====
+$color-primary: #2ee6a6;      // verde menta (dominante)
+$color-primary-dark: #23c98e;
+$color-secondary: #14b8a6;    // teal
+$color-accent: #ff6b6b;       // coral (tercer color)
 
 // ===== Estados =====
-$color-success: #2ec4b6;
+$color-success: #2ee6a6;
 $color-danger: #e5484d;
 $color-warning: #f5a524;
 
-// ===== Superficies (tema oscuro) =====
-$color-bg: #12141a;
-$color-surface: #1b1e26;
+// ===== Superficies (negro) =====
+$color-bg: #000000;
+$color-surface: #111413;
 $color-border: rgba(255, 255, 255, 0.08);
 
 // ===== Texto =====
-$color-text: #f5f6f7;
-$color-text-muted: #9aa0a6;
+$color-text: #f2f5f4;
+$color-text-muted: #8b9491;
 
 // ===== Espaciados =====
 $space-xs: 4px;
@@ -42,7 +42,7 @@ $font-xl: 1.5rem;
 $font-2xl: 2rem;
 
 // ===== Degradado de marca =====
-$gradient-brand: linear-gradient(90deg, #2b7de9, #2ec4b6 50%, #ff6b35);
+$gradient-brand: linear-gradient(90deg, #2ee6a6, #ff6b6b);
 
 // ===== Breakpoints =====
 $bp-sm: 480px;

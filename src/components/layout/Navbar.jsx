@@ -1,4 +1,5 @@
 import { useAuth } from '../../hooks/useAuth.js'
+import Avatar from '../ui/Avatar.jsx'
 
 export default function Navbar({ onMenuClick }) {
   const { user, logout } = useAuth()
@@ -16,7 +17,10 @@ export default function Navbar({ onMenuClick }) {
           <span />
           <span />
         </button>
-        <span className="navbar__name">{user?.name || user?.email}</span>
+        <div className="navbar__user">
+          <Avatar user={user} size={32} />
+          <span className="navbar__name">{user?.name || user?.email}</span>
+        </div>
       </div>
 
       <button className="navbar__logout" type="button" onClick={logout}>

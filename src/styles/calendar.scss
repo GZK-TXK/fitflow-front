@@ -73,7 +73,7 @@
   }
 
   &__cell {
-    min-height: 96px;
+    min-height: 64px;
     background: $color-bg;
     border: 1px solid $color-border;
     border-radius: $radius-sm;
@@ -129,6 +129,7 @@
   }
 
   &__item-title {
+    display: none;
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -148,13 +149,13 @@
   }
 }
 
-@media (max-width: $bp-md) {
+@media (min-width: $bp-md) {
   .calendar__cell {
-    min-height: 64px;
+    min-height: 96px;
   }
 
   .calendar__item-title {
-    display: none;
+    display: block;
   }
 }
 

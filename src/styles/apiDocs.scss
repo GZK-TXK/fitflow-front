@@ -1,0 +1,20 @@
+@use 'variables' as *;
+
+.api-docs {
+  &__swagger {
+    background: #ffffff;
+    color: #1f1f1f;
+    border-radius: $radius-md;
+    padding: $space-md;
+    margin-top: $space-md;
+    overflow-x: auto;
+
+    .swagger-ui {
+      color: #1f1f1f;
+    }
+
+    .swagger-ui .topbar {
+      display: none;
+    }
+  }
+}

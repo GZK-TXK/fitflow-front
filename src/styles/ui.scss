@@ -23,19 +23,19 @@
 
   &--primary {
     background: $color-primary;
-    color: #fff;
+    color: #062a26;
     &:hover:not(:disabled) { background: $color-primary-dark; }
   }
 
   &--secondary {
     background: $color-secondary;
-    color: #fff;
+    color: #062a26;
     &:hover:not(:disabled) { filter: brightness(0.92); }
   }
 
   &--accent {
     background: $color-accent;
-    color: #062a26;
+    color: #fff;
     &:hover:not(:disabled) { filter: brightness(0.95); }
   }
 
@@ -86,7 +86,7 @@
 
   &:focus {
     border-color: $color-primary;
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+    box-shadow: 0 0 0 3px rgba(46, 230, 166, 0.15);
   }
 
   &--error { border-color: $color-danger; }
@@ -168,8 +168,8 @@
   }
 
   &--success {
-    background: rgba(46, 196, 182, 0.12);
-    border-color: rgba(46, 196, 182, 0.5);
+    background: rgba(46, 230, 166, 0.12);
+    border-color: rgba(46, 230, 166, 0.5);
     color: $color-success;
   }
 
@@ -180,9 +180,9 @@
   }
 
   &--info {
-    background: rgba(43, 125, 233, 0.1);
-    border-color: rgba(43, 125, 233, 0.4);
-    color: #8bb8f2;
+    background: rgba(20, 184, 166, 0.1);
+    border-color: rgba(20, 184, 166, 0.4);
+    color: #5eead4;
   }
 }
 

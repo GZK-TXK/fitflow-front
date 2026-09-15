@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar.jsx'
 import Navbar from './Navbar.jsx'
+import AssistantWidget from '../assistant/AssistantWidget.jsx'
 import '../../styles/layout.scss'
 
 export default function AppLayout() {
@@ -21,6 +22,8 @@ export default function AppLayout() {
           <Outlet />
         </main>
       </div>
+
+      <AssistantWidget />
     </div>
   )
 }

@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+.video-embed {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; // 16:9
+  border-radius: $radius-md;
+  overflow: hidden;
+  background: #000;
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+.video-fallback {
+  color: $color-text-muted;
+  font-size: $font-sm;
+}

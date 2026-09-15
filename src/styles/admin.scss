@@ -76,7 +76,7 @@
     }
 
     &--active {
-      background: rgba(255, 107, 53, 0.12);
+      background: rgba(46, 230, 166, 0.12);
       border-color: $color-primary;
       color: $color-primary;
     }
@@ -97,7 +97,8 @@
     th,
     td {
       text-align: left;
-      padding: $space-sm $space-md;
+      padding: $space-xs $space-sm;
+      white-space: nowrap;
       border-bottom: 1px solid $color-border;
     }
 
@@ -117,12 +118,12 @@
     color: $color-text-muted;
 
     &--admin {
-      background: rgba(43, 125, 233, 0.15);
-      color: #8bb8f2;
+      background: rgba(20, 184, 166, 0.15);
+      color: #5eead4;
     }
 
     &--active {
-      background: rgba(46, 196, 182, 0.15);
+      background: rgba(46, 230, 166, 0.15);
       color: $color-success;
     }
 
@@ -137,20 +138,40 @@
     }
   }
 
+  &__presence {
+    display: inline-flex;
+    align-items: center;
+    gap: $space-xs;
+    font-size: $font-xs;
+    color: $color-text-muted;
+    white-space: nowrap;
+
+    &--online { color: $color-success; }
+  }
+
+  &__presence-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $color-success;
+    box-shadow: 0 0 0 3px rgba(46, 230, 166, 0.2);
+  }
+
   &__row-actions {
     display: flex;
+    flex-direction: column;
     gap: $space-xs;
   }
 }
 
-@media (max-width: $bp-md) {
+@media (min-width: $bp-md) {
   .admin__table th,
   .admin__table td {
-    padding: $space-xs $space-sm;
-    white-space: nowrap;
+    padding: $space-sm $space-md;
+    white-space: normal;
   }
 
   .admin__row-actions {
-    flex-direction: column;
+    flex-direction: row;
   }
 }

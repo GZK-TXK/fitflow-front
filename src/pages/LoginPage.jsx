@@ -47,8 +47,12 @@ export default function LoginPage() {
   return (
     <div className="auth">
       <form className="auth__card" onSubmit={handleSubmit}>
-        <h1 className="auth__title">FitFlow</h1>
-        <p className="auth__subtitle">Inicia sesión para gestionar tus clientes</p>
+        <div className="auth__brand">
+          <img className="auth__logo" src="/logo-fitflow.svg" alt="FitFlow" />
+        </div>
+        <p className="auth__subtitle">
+          Sigue tus rutinas, mira tus vídeos y cumple tus objetivos
+        </p>
 
         {error && <p className="auth__error">{error}</p>}
 
@@ -87,7 +91,7 @@ export default function LoginPage() {
         </button>
 
         <p className="auth__switch">
-          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
+          El acceso es solo por invitación. <Link to="/login">Pide una a tu entrenador</Link>.
         </p>
       </form>
     </div>

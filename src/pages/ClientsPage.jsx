@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Users } from 'lucide-react'
 import { useClients } from '../hooks/useClients.js'
+import { usePresence } from '../hooks/usePresence.js'
 import Button from '../components/ui/Button.jsx'
 import Spinner from '../components/ui/Spinner.jsx'
 import Alert from '../components/ui/Alert.jsx'
@@ -13,6 +14,7 @@ import '../styles/clients.scss'
 
 export default function ClientsPage() {
   const { clients, loading, error, createClient, updateClient, deleteClient } = useClients()
+  const { isOnline } = usePresence()
 
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState(null)
@@ -74,9 +76,14 @@ export default function ClientsPage() {
           {clients.map((client) => (
             <li key={client.id} className="clients__item">
               <div className="clients__info">
-                <Link to={`/clients/${client.id}`} className="clients__name">
-                  {client.name}
-                </Link>
+                <span className="clients__name-row">
+                  <Link to={`/clients/${client.id}`} className="clients__name">
+                    {client.name}
+                  </Link>
+                  {client.accountUserId && isOnline(client.accountUserId) && (
+                    <span className="clients__online" title="En línea" />
+                  )}
+                </span>
                 <span className="clients__meta">{client.email || 'Sin email'}</span>
               </div>
               <div className="clients__actions">

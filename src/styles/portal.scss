@@ -46,8 +46,8 @@
 
   &__item {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
     gap: $space-md;
     background: $color-surface;
     border: 1px solid $color-border;
@@ -77,8 +77,8 @@
 
   &__exercise {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
     gap: $space-md;
     background: $color-surface;
     border: 1px solid $color-border;
@@ -118,10 +118,12 @@
   }
 }
 
-@media (max-width: $bp-md) {
+@media (min-width: $bp-md) {
   .portal__item,
   .portal__exercise {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-md;
   }
 }

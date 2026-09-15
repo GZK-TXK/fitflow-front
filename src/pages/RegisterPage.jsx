@@ -1,16 +1,43 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
+import { api } from '../lib/apiClient.js'
 import { useAuth } from '../hooks/useAuth.js'
+import Spinner from '../components/ui/Spinner.jsx'
 import '../styles/auth.scss'
 
 export default function RegisterPage() {
   const { register, loginWithGoogle } = useAuth()
-  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const inviteToken = searchParams.get('invite') || ''
 
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
+  const [invite, setInvite] = useState(null)
+  const [loadingInvite, setLoadingInvite] = useState(true)
+  const [form, setForm] = useState({ name: '', password: '', confirm: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [pending, setPending] = useState(false)
+
+  useEffect(() => {
+    let active = true
+    if (!inviteToken) {
+      setLoadingInvite(false)
+      return
+    }
+    api
+      .get(`/api/invitations/${inviteToken}`, { auth: false })
+      .then((data) => {
+        if (active) setInvite(data)
+      })
+      .catch(() => {
+        if (active) setInvite(null)
+      })
+      .finally(() => {
+        if (active) setLoadingInvite(false)
+      })
+    return () => {
+      active = false
+    }
+  }, [inviteToken])
 
   const handleChange = (event) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }))
@@ -37,7 +64,12 @@ export default function RegisterPage() {
 
     setLoading(true)
     try {
-      await register({ name: form.name, email: form.email, password: form.password })
+      await register({
+        name: form.name,
+        email: invite.email,
+        password: form.password,
+        inviteToken,
+      })
       setPending(true)
     } catch (err) {
       setError(err.message || 'No se pudo registrar la cuenta')
@@ -50,23 +82,63 @@ export default function RegisterPage() {
     setError('')
     setLoading(true)
     try {
-      await loginWithGoogle()
-      navigate('/', { replace: true })
+      await loginWithGoogle(inviteToken)
     } catch (err) {
-      setError(err.message || 'No se pudo continuar con Google')
+      if (err.status === 403) {
+        setPending(true)
+      } else {
+        setError(err.message || 'No se pudo continuar con Google')
+      }
     } finally {
       setLoading(false)
     }
+  }
+
+  if (loadingInvite) {
+    return (
+      <div className="auth">
+        <div className="auth__card">
+          <Spinner label="Comprobando invitación..." />
+        </div>
+      </div>
+    )
+  }
+
+  if (!invite || !invite.valid) {
+    return (
+      <div className="auth">
+        <div className="auth__card">
+          <div className="auth__brand">
+            <img className="auth__logo" src="/logo-fitflow.svg" alt="FitFlow" />
+          </div>
+          <h1 className="auth__title">Invitación no válida</h1>
+          <p className="auth__subtitle">
+            {invite && invite.used
+              ? 'Esta invitación ya se ha utilizado.'
+              : invite && invite.expired
+              ? 'Esta invitación ha caducado.'
+              : 'Necesitas una invitación válida para registrarte.'}
+          </p>
+          <Link to="/login" className="auth__submit auth__submit--link">
+            Ir a iniciar sesión
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   if (pending) {
     return (
       <div className="auth">
         <div className="auth__card">
+          <div className="auth__brand">
+            <img className="auth__logo" src="/logo-fitflow.svg" alt="FitFlow" />
+          </div>
           <h1 className="auth__title">Solicitud enviada</h1>
           <p className="auth__subtitle">
-            Tu cuenta se ha creado y queda pendiente de aprobación por el administrador.
-            Podrás iniciar sesión cuando sea activada.
+            {invite.type === 'CLIENT'
+              ? 'Tu cuenta se ha creado. Tu entrenador debe darte acceso para que puedas entrar.'
+              : 'Tu cuenta se ha creado y queda pendiente de aprobación por el administrador.'}
           </p>
           <Link to="/login" className="auth__submit auth__submit--link">
             Ir a iniciar sesión
@@ -79,26 +151,24 @@ export default function RegisterPage() {
   return (
     <div className="auth">
       <form className="auth__card" onSubmit={handleSubmit}>
+        <div className="auth__brand">
+          <img className="auth__logo" src="/logo-fitflow.svg" alt="FitFlow" />
+        </div>
         <h1 className="auth__title">Crear cuenta</h1>
-        <p className="auth__subtitle">Empieza a gestionar tus clientes con FitFlow</p>
+        <p className="auth__subtitle">
+          Invitación para {invite.type === 'CLIENT' ? 'cliente' : 'entrenador'}
+        </p>
 
         {error && <p className="auth__error">{error}</p>}
 
         <label className="auth__field">
-          <span>Nombre</span>
-          <input name="name" value={form.name} onChange={handleChange} required />
+          <span>Email</span>
+          <input type="email" value={invite.email} readOnly disabled />
         </label>
 
         <label className="auth__field">
-          <span>Email</span>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            autoComplete="email"
-          />
+          <span>Nombre</span>
+          <input name="name" value={form.name} onChange={handleChange} required />
         </label>
 
         <label className="auth__field">
